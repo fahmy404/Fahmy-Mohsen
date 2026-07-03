@@ -16,11 +16,12 @@ export default function Footer() {
             <span className="text-gray-500 text-sm">© {new Date().getFullYear()} جميع الحقوق محفوظة.</span>
           </div>
 
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-gray-400">
             <a href="#hero" className="hover:text-white transition-colors">الرئيسية</a>
             <a href="#about" className="hover:text-white transition-colors">نبذة عني</a>
             <a href="#services" className="hover:text-white transition-colors">خدماتي</a>
-            <a href="#portfolio" className="hover:text-white transition-colors">الأعمال</a>
+            <a href="#brands" className="hover:text-white transition-colors">شركاء النجاح</a>
+            <a href="#websites" className="hover:text-white transition-colors">أعمالي</a>
           </div>
 
           <button 

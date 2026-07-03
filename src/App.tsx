@@ -8,11 +8,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Services from './components/Services';
 import Brands from './components/Brands';
-import LogoDesigns from './components/LogoDesigns';
-import SocialMediaDesigns from './components/SocialMediaDesigns';
 import WebsitesPortfolio from './components/WebsitesPortfolio';
-import SaaS from './components/SaaS';
-import RecruitmentPlatform from './components/RecruitmentPlatform';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
@@ -26,11 +22,7 @@ export default function App() {
         <Services />
         <Brands />
         <div id="portfolio">
-          <LogoDesigns />
-          <SocialMediaDesigns />
           <WebsitesPortfolio />
-          <SaaS />
-          <RecruitmentPlatform />
         </div>
         <Contact />
       </main>

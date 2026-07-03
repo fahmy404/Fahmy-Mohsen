@@ -18,7 +18,8 @@ export default function Navbar() {
     { name: 'الرئيسية', href: '#hero' },
     { name: 'نبذة عني', href: '#about' },
     { name: 'خدماتي', href: '#services' },
-    { name: 'الأعمال', href: '#websites' },
+    { name: 'شركاء النجاح', href: '#brands' },
+    { name: 'أعمالي', href: '#websites' },
     { name: 'تواصل معي', href: 'https://wa.me/201027899375' },
   ];
 

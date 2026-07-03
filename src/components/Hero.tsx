@@ -21,11 +21,11 @@ export default function Hero() {
           <h2 className="text-sm md:text-base uppercase tracking-[0.2em] text-gray-400 mb-6 font-medium">
             مرحباً بك في عالمي الرقمي
           </h2>
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
             سابقة أعمال <br />
             <span className="text-gradient-gold font-serif italic pr-2">Fahmy Mohsen</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
             تطوير مواقع – أنظمة SaaS – أدوات الذكاء الاصطناعي – تصميم الهوية الرقمية
           </p>
 

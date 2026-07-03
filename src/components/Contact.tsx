@@ -3,8 +3,8 @@ import { Phone, Mail, User } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" className="py-16 md:py-32 relative overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
           
           {/* Content Side */}
@@ -16,10 +16,10 @@ export default function Contact() {
             className="w-full lg:w-1/2"
           >
             <h2 className="text-sm uppercase tracking-[0.2em] text-amber-500 mb-4 font-medium">تواصل معي</h2>
-            <h3 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h3 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-5 leading-tight">
               لنصنع معاً حلولاً رقمية قوية وابتكارية.
             </h3>
-            <p className="text-xl text-gray-300 mb-12 leading-relaxed font-light">
+            <p className="text-base sm:text-xl text-gray-300 mb-10 leading-relaxed font-light">
               هل لديك فكرة مشروع أو تحتاج إلى استشارة تقنية؟ لا تتردد في التواصل معي.
             </p>
             
@@ -70,7 +70,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500 uppercase tracking-wider mb-1">البريد الإلكتروني</p>
-                  <a href="mailto:fahmymohsen777@gmail.com" className="text-xl font-medium text-white hover:text-emerald-400 transition-colors">
+                  <a href="mailto:fahmymohsen777@gmail.com" className="text-sm sm:text-xl font-medium text-white hover:text-emerald-400 transition-colors break-all">
                     fahmymohsen777@gmail.com
                   </a>
                 </div>
@@ -86,7 +86,7 @@ export default function Contact() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full lg:w-1/2 relative"
           >
-            <div className="glass-panel p-8 md:p-12 rounded-3xl border border-white/10 relative z-10">
+            <div className="glass-panel p-6 sm:p-8 md:p-12 rounded-3xl border border-white/10 relative z-10">
               <h4 className="text-2xl font-bold mb-8">أرسل رسالة</h4>
               <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                 <div>

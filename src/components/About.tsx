@@ -22,9 +22,9 @@ export default function About() {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2 relative"
           >
-            <div className="relative aspect-[4/5] w-full max-w-md mx-auto lg:mx-0 rounded-2xl overflow-hidden glass-panel p-2">
+            <div className="relative w-full max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden glass-panel p-2" style={{aspectRatio:'4/5', maxHeight: '420px'}}>
               <img 
-                src="https://69abfe42fa9e210ee0f042d0.imgix.net/photo_5870703493562174712_y.jpg" 
+                src="/images/me/fahmy.jpg" 
                 alt="Fahmy Mohsen" 
                 className="w-full h-full object-cover rounded-xl filter grayscale hover:grayscale-0 transition-all duration-700"
                 referrerPolicy="no-referrer"
@@ -73,7 +73,7 @@ export default function About() {
             </div>
 
             <div className="pt-8 border-t border-white/10">
-              <div className="flex gap-8">
+              <div className="flex flex-wrap gap-6">
                 <div>
                   <p className="text-3xl font-bold text-white mb-1">+5</p>
                   <p className="text-sm text-gray-500 uppercase tracking-wider">سنوات خبرة</p>

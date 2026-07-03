@@ -10,6 +10,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -36,6 +37,20 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+/* Seamless Marquee Animations */
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.marquee-left  { animation: marquee-left  var(--speed, 35s) linear infinite; }
+.marquee-right { animation: marquee-right var(--speed, 40s) linear infinite; }
+.marquee-left:hover,
+.marquee-right:hover { animation-play-state: paused; }
 
 /* Hide scrollbar for clean UI */
 ::-webkit-scrollbar {
