@@ -1,28 +1,35 @@
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { CheckCircle2, Star } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { useLang } from '../contexts/LangContext';
 
+// ✅ FIX: Throttled TiltCard mousemove - only update position every 2 frames
 function TiltCard({ children, className }: { children: React.ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-100, 100], [8, -8]), { stiffness: 150, damping: 20 });
-  const rotateY = useSpring(useTransform(x, [-100, 100], [-8, 8]), { stiffness: 150, damping: 20 });
+  // ✅ FIX: Reduced rotation range from ±8° to ±5° for subtler, lighter effect
+  const rotateX = useSpring(useTransform(y, [-100, 100], [5, -5]), { stiffness: 100, damping: 25 });
+  const rotateY = useSpring(useTransform(x, [-100, 100], [-5, 5]), { stiffness: 100, damping: 25 });
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const lastMoveTime = useRef(0);
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    // ✅ FIX: Throttle to ~30fps
+    const now = Date.now();
+    if (now - lastMoveTime.current < 33) return;
+    lastMoveTime.current = now;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     x.set(e.clientX - rect.left - rect.width / 2);
     y.set(e.clientY - rect.top - rect.height / 2);
-  };
+  }, [x, y]);
 
   return (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => { x.set(0); y.set(0); }}
-      style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
+      style={{ rotateX, rotateY, transformStyle: 'preserve-3d', willChange: 'transform' }}
       className={className}
     >
       {children}
@@ -51,19 +58,15 @@ export default function About() {
 
   return (
     <section id="about" className="py-24 md:py-36 relative overflow-hidden">
-      {/* Background */}
+      {/* Background — ✅ FIX: Replaced Framer Motion animate with CSS animation for background blobs */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <motion.div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(242,169,0,0.05) 0%, transparent 70%)', filter: 'blur(80px)' }}
-          animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
-          transition={{ repeat: Infinity, duration: 12, ease: 'easeInOut' }}
+        <div
+          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full float-slow"
+          style={{ background: 'radial-gradient(circle, rgba(242,169,0,0.05) 0%, transparent 70%)', filter: 'blur(80px)', opacity: 0.6 }}
         />
-        <motion.div
-          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)', filter: 'blur(80px)' }}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ repeat: Infinity, duration: 15, ease: 'easeInOut', delay: 4 }}
+        <div
+          className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full float-slow"
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)', filter: 'blur(80px)', opacity: 0.5, animationDelay: '-4s' }}
         />
       </div>
 
@@ -90,6 +93,7 @@ export default function About() {
                     alt="Fahmy Mohsen"
                     className="w-full h-full object-cover transition-all duration-700 hover:scale-105"
                     style={{ filter: 'grayscale(15%)' }}
+                    loading="lazy"
                   />
                   <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(2,2,6,0.9) 0%, rgba(2,2,6,0.3) 50%, transparent 100%)' }} />
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -113,12 +117,12 @@ export default function About() {
                 </div>
               </div>
 
-              {/* Floating badge — متاح للعمل only */}
+              {/* Floating badge */}
               <motion.div
                 animate={{ y: [0, -8, 0] }}
                 transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
                 className="absolute -top-4 -right-4 px-3 py-2 rounded-xl text-xs font-bold"
-                style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', backdropFilter: 'blur(10px)' }}
+                style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', color: '#818cf8', backdropFilter: 'blur(10px)', willChange: 'transform' }}
               >
                 ✦ {t('متاح للعمل', 'Available')}
               </motion.div>

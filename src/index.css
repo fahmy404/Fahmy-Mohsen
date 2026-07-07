@@ -32,6 +32,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
+  /* ✅ PERF: Prevent scroll chaining & improve scroll performance */
+  overscroll-behavior: none;
 }
 
 body {
@@ -41,6 +43,8 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* ✅ PERF: Optimize text rendering for performance over quality (reduces CPU load) */
+  text-rendering: optimizeSpeed;
 }
 
 /* ── Scrollbar ── */
@@ -266,3 +270,28 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ── Performance: GPU-accelerated sections ── */
+/* ✅ PERF: content-visibility skips rendering for off-screen sections (huge savings) */
+#about, #services, #brands, #websites, #contact {
+  content-visibility: auto;
+  /* Estimated section height to prevent layout shift */
+  contain-intrinsic-size: 0 800px;
+}
+
+/* ✅ PERF: Promote animated blobs to their own GPU compositing layer */
+.aurora-bg::before {
+  will-change: opacity;
+}
+
+/* ✅ PERF: Ensure marquee animations use GPU compositing */
+.marquee-left, .marquee-right {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ✅ PERF: Smooth image rendering during transforms */
+img {
+  image-rendering: auto;
+}
+

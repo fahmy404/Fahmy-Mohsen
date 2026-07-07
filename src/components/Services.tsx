@@ -3,10 +3,75 @@ import { Code2, Layout, Database, Bot, Palette, Share2, ArrowLeft } from 'lucide
 import { useState } from 'react';
 import { useLang } from '../contexts/LangContext';
 
+// ✅ FIX: Extracted ServiceCard to its own component so useState can be used legally
+// (React Hooks must not be called inside .map() callbacks)
+interface ServiceItem {
+  titleAr: string;
+  titleEn: string;
+  icon: React.ElementType;
+  descAr: string;
+  descEn: string;
+  color: string;
+  tags: string[];
+  number: string;
+}
+
+function ServiceCard({ service, index, t }: { service: ServiceItem; index: number; t: (ar: string, en: string) => string }) {
+  const [hovered, setHovered] = useState(false);
+  const Icon = service.icon;
+
+  return (
+    <motion.div
+      key={service.number}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      className="relative group rounded-3xl p-7 cursor-default overflow-hidden"
+      style={{
+        background: hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
+        border: `1px solid ${hovered ? service.color + '30' : 'rgba(255,255,255,0.06)'}`,
+        transition: 'all 0.4s ease',
+        willChange: 'transform',
+      }}
+    >
+      <motion.div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
+        style={{ background: `radial-gradient(circle at 30% 30%, ${service.color}08 0%, transparent 70%)` }}
+      />
+      <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `linear-gradient(90deg, transparent, ${service.color}60, transparent)` }} />
+      <div className="absolute top-6 right-6 text-4xl font-black opacity-[0.06] select-none" style={{ color: service.color }}>
+        {service.number}
+      </div>
+      <motion.div
+        className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
+        style={{ background: `${service.color}12`, border: `1px solid ${service.color}25` }}
+        animate={hovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+      >
+        <Icon className="w-5 h-5" style={{ color: service.color }} />
+      </motion.div>
+      <h3 className="text-lg font-bold text-white mb-3">{t(service.titleAr, service.titleEn)}</h3>
+      <p className="text-sm text-gray-500 leading-relaxed mb-5">{t(service.descAr, service.descEn)}</p>
+      <div className="flex flex-wrap gap-2">
+        {service.tags.map(tag => (
+          <span key={tag} className="text-xs px-2.5 py-1 rounded-lg font-medium"
+            style={{ background: `${service.color}08`, color: service.color, border: `1px solid ${service.color}20` }}>
+            {tag}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Services() {
   const { t } = useLang();
 
-  const services = [
+  const services: ServiceItem[] = [
     {
       titleAr: 'تطوير المواقع الحديثة', titleEn: 'Modern Web Development',
       icon: Code2,
@@ -59,13 +124,13 @@ export default function Services() {
           style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0)', backgroundSize: '28px 28px' }} />
         <motion.div
           className="absolute left-1/4 top-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)', filter: 'blur(80px)' }}
+          style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%)', filter: 'blur(80px)', willChange: 'transform' }}
           animate={{ scale: [1, 1.15, 1], opacity: [0.4, 0.7, 0.4] }}
           transition={{ repeat: Infinity, duration: 14, ease: 'easeInOut' }}
         />
         <motion.div
           className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(242,169,0,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }}
+          style={{ background: 'radial-gradient(circle, rgba(242,169,0,0.05) 0%, transparent 70%)', filter: 'blur(60px)', willChange: 'transform' }}
           animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
           transition={{ repeat: Infinity, duration: 18, ease: 'easeInOut', delay: 5 }}
         />
@@ -111,55 +176,9 @@ export default function Services() {
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {services.map((service, index) => {
-            const [hovered, setHovered] = useState(false);
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.number}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                onHoverStart={() => setHovered(true)}
-                onHoverEnd={() => setHovered(false)}
-                className="relative group rounded-3xl p-7 cursor-default overflow-hidden"
-                style={{
-                  background: hovered ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${hovered ? service.color + '30' : 'rgba(255,255,255,0.06)'}`,
-                  transition: 'all 0.4s ease',
-                }}
-              >
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
-                  style={{ background: `radial-gradient(circle at 30% 30%, ${service.color}08 0%, transparent 70%)` }}
-                />
-                <div className="absolute top-0 left-0 right-0 h-[1px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(90deg, transparent, ${service.color}60, transparent)` }} />
-                <div className="absolute top-6 right-6 text-4xl font-black opacity-[0.06] select-none" style={{ color: service.color }}>
-                  {service.number}
-                </div>
-                <motion.div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center mb-5"
-                  style={{ background: `${service.color}12`, border: `1px solid ${service.color}25` }}
-                  animate={hovered ? { scale: 1.1, rotate: 5 } : { scale: 1, rotate: 0 }}
-                  transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                >
-                  <Icon className="w-5 h-5" style={{ color: service.color }} />
-                </motion.div>
-                <h3 className="text-lg font-bold text-white mb-3">{t(service.titleAr, service.titleEn)}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-5">{t(service.descAr, service.descEn)}</p>
-                <div className="flex flex-wrap gap-2">
-                  {service.tags.map(tag => (
-                    <span key={tag} className="text-xs px-2.5 py-1 rounded-lg font-medium"
-                      style={{ background: `${service.color}08`, color: service.color, border: `1px solid ${service.color}20` }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
+          {services.map((service, index) => (
+            <ServiceCard key={service.number} service={service} index={index} t={t} />
+          ))}
         </div>
 
         {/* Bottom CTA */}
