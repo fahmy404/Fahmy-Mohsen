@@ -1,8 +1,5 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
+import { motion } from 'framer-motion';
+import { LangProvider } from './contexts/LangContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -14,19 +11,28 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-amber-500/30 selection:text-amber-200">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        <Brands />
-        <div id="portfolio">
-          <WebsitesPortfolio />
-        </div>
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <LangProvider>
+      <motion.div
+        className="min-h-screen text-white"
+        style={{ background: '#020206' }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+      >
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Services />
+          <Brands />
+          <div id="portfolio">
+            <WebsitesPortfolio />
+          </div>
+          <Contact />
+        </main>
+        <Footer />
+      </motion.div>
+    </LangProvider>
   );
 }
+

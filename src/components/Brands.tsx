@@ -1,4 +1,5 @@
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
+import { useLang } from '../contexts/LangContext';
 
 const brands = [
   { src: "/images/brands/photo_6039613149876963823_x.jpg" },
@@ -25,6 +26,7 @@ const brands = [
 ];
 
 export default function Brands() {
+  const { t } = useLang();
   return (
     <section id="brands" className="py-16 md:py-24 relative overflow-hidden bg-[#050505]">
       {/* Ambient glow */}
@@ -47,7 +49,7 @@ export default function Brands() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-400" />
             </span>
-            <span className="text-sm text-amber-400 font-medium uppercase tracking-[0.18em]">العلامات التجارية</span>
+            <span className="text-sm text-amber-400 font-medium uppercase tracking-[0.18em]">{t('العلامات التجارية', 'Brands')}</span>
           </motion.div>
 
           <motion.h2
@@ -57,7 +59,7 @@ export default function Brands() {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
           >
-            شركاء النجاح
+            {t('شركاء النجاح', 'Our Partners')}
           </motion.h2>
 
           <motion.p
@@ -67,7 +69,7 @@ export default function Brands() {
             transition={{ delay: 0.18 }}
             className="text-gray-500 max-w-lg mx-auto text-sm sm:text-base"
           >
-            فخور بالعمل مع مجموعة متنوعة من الشركات والعلامات التجارية المميزة
+            {t('فخور بالعمل مع مجموعة متنوعة من الشركات والعلامات التجارية المميزة', 'Proud to work with a diverse range of companies and distinguished brands')}
           </motion.p>
         </div>
 
@@ -134,7 +136,7 @@ export default function Brands() {
             style={{ background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1))' }} />
           <span className="text-sm" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <span className="text-amber-400 font-bold text-xl">{brands.length}+</span>
-            {' '}علامة تجارية وشركة
+            {' '}{t('علامة تجارية وشركة', 'Brands & Companies')}
           </span>
           <div className="h-px flex-1 max-w-[80px]"
             style={{ background: 'linear-gradient(to left, transparent, rgba(255,255,255,0.1))' }} />

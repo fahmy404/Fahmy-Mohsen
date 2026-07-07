@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Eye, Lock, User, Tag, ChevronDown, ChevronUp, Globe, Zap, Clock, BookOpen, Droplets, Monitor } from 'lucide-react';
 
 interface Project {
